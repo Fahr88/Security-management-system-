@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>فحص المركبات الخفيفة | Light Vehicle Inspection</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <style>body { font-family: 'Tajawal', sans-serif; }</style>
+</head>
+<body class="bg-gray-100">
+
+  <header class="bg-[#e5d9cf] text-[#170a5e] py-6 text-center shadow-md">
+    <img src="132312.png" alt="OQ8 Logo" class="w-20 mx-auto mb-2" />
+    <h1 class="text-xl font-bold">فحص المركبات الخفيفة | Light Vehicle Inspection</h1>
+  </header>
+
+  <h2 class="text-2xl font-bold text-center my-4 text-[#170a5e]">🚗 نموذج فحص المركبات الخفيفة – OQ8</h2>
+
+  <main id="form-content" class="max-w-5xl mx-auto bg-white mt-6 p-6 rounded-lg shadow-lg">
+    <form id="vehicleForm">
+      <section class="grid md:grid-cols-2 gap-4">
+        <div><label>التاريخ والوقت</label><input type="datetime-local" class="w-full p-2 border rounded" /></div>
+        <div><label>المقاول</label><input type="text" class="w-full p-2 border rounded" /></div>
+        <div><label>رقم اللوحة</label><input type="text" class="w-full p-2 border rounded" /></div>
+        <div><label>القراءة الحالية</label><input type="number" class="w-full p-2 border rounded" /></div>
+        <div><label>النوع والموديل</label><input type="text" class="w-full p-2 border rounded" /></div>
+        <div><label>اسم المفتش</label><input type="text" class="w-full p-2 border rounded" /></div>
+      </section>
+      <section class="mt-6">
+        <h2 class="text-lg font-bold text-[#170a5e] mb-2">قائمة الفحص</h2>
+        <table class="w-full border text-sm">
+          <thead><tr class="bg-gray-200"><th>#</th><th>البند</th><th>نعم</th><th>لا</th><th>ملاحظات</th></tr></thead>
+          <tbody id="checklistBody"></tbody>
+        </table>
+      </section>
+      <section class="mt-6">
+        <label class="font-semibold block mb-1">ملاحظات عامة</label>
+        <textarea rows="3" class="w-full border rounded p-2"></textarea>
+      </section>
+      <section class="mt-6 grid md:grid-cols-2 gap-4">
+        <div><label class="font-semibold">اسم الفاحص / Inspected By</label><input type="text" class="w-full p-2 border rounded" /></div>
+        <div><label class="font-semibold">النتيجة النهائية / Final Result</label>
+          <select class="w-full p-2 border rounded"><option value="">-- اختر / Select --</option><option value="pass">✔️ ناجح / Pass</option><option value="fail">❌ غير ناجح / Fail</option></select>
+        </div>
+        <div><label class="font-semibold">التوقيع / Signature</label><input type="text" placeholder="اسم الفاحص أو التوقيع" class="w-full p-2 border rounded" /></div>
+        <div><label class="font-semibold">تاريخ التوقيع / Signature Date</label><input type="date" class="w-full p-2 border rounded" /></div>
+      </section>
+      <section class="mt-6">
+        <label class="font-semibold">📧 البريد الإلكتروني لاستلام التقرير</label>
+        <input type="email" id="userEmail" placeholder="example@email.com" class="w-full mt-2 p-2 border rounded" required />
+      </section>
+      <div class="text-center mt-8 space-y-3">
+        <button type="button" onclick="exportAsPDF('form-content', 'vehicle-inspection.pdf')" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">📄 تصدير PDF</button>
+        <button type="button" data-original-text="📧 إرسال بالبريد" onclick="sendEmailWithPDF({
+            formId: 'form-content',
+            emailInputId: 'userEmail',
+            pdfFileName: 'vehicle-inspection.pdf',
+            formTitle: 'تقرير فحص المركبات الخفيفة',
+            templateId: 'template_652w4jx',
+            serviceId: 'service_juhobd8'
+        })" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700">📧 إرسال بالبريد</button>
+        <button type="button" onclick="goBack()" class="bg-[#170a5e] text-white px-6 py-3 rounded-lg hover:bg-purple-800">🔙 رجوع</button>
+      </div>
+    </form>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script src="app_v2.js"></script>
+  <script>
+    const items = ["صلاحية الملكية / Mulkiya valid", "لا أضرار حوادث / No accident damage", "الزجاج والمرايا واضحة / Clear windshields & mirrors", "عمل المساحات / Wipers functional", "المصابيح الأمامية مقبولة / Headlights acceptable", "الفرامل وضوء الفرامل / Brakes & brake light", "المصابيح الخلفية مقبولة / Rear lights acceptable", "مانع شرر ولا دخان كثيف / Spark arrester - no thick smoke", "الإطارات والعجلات سليمة / Tires & wheels undamaged", "الإطار الاحتياطي متوفر / Spare tire available", "حزام الأمان والمقاعد سليمة / Seatbelt & seats good", "قضبان الحماية مثبتة / Rollover bars fixed", "مفتاح IVMS يعمل / IVMS key working", "فرامل اليد تعمل / Hand brakes working", "المقود والبوق يعملان / Steering & horn functional", "عداد السرعة يعمل / Tachometer works", "التكييف يعمل / AC working", "رقم الطوارئ ظاهر / Emergency contact posted", "الرافعة والمقبض متوفران / Jack & handle available", "صندوق إسعافات أولية / First Aid Box", "مثلث التحذير متوفر / Hazard triangle available", "أغطية أطراف البطارية / Battery terminal caps", "مانع شرر مركب / Spark arrester fitted", "طفاية حريق صالحة / Fire extinguisher valid"];
+    const tbody = document.getElementById("checklistBody");
+    items.forEach((item, i) => {
+      const row = `<tr><td class='border p-1 text-center'>${i+1}</td><td class='border p-1'>${item}</td><td class='border text-center'><input type='checkbox'></td><td class='border text-center'><input type='checkbox'></td><td class='border'><input type='text' class='w-full border-none p-1'></td></tr>`;
+      tbody.innerHTML += row;
+    });
+  </script>
+</body>
+</html>

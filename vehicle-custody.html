@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>فحص عهدة المركبات | Vehicle Custody Inspection</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <style>body { font-family: 'Tajawal', sans-serif; }</style>
+</head>
+<body class="bg-gray-100">
+
+  <header class="bg-[#e5d9cf] text-[#170a5e] py-6 text-center shadow-md">
+    <img src="132312.png" alt="OQ8 Logo" class="w-20 mx-auto mb-2" />
+    <h1 class="text-xl font-bold">[فحص عهدة المركبات / Vehicle Custody Inspection]</h1>
+  </header>
+
+  <main class="max-w-5xl mx-auto bg-white mt-6 p-6 rounded-lg shadow-lg" id="form-content">
+    <form id="custodyForm">
+      <section class="grid md:grid-cols-2 gap-4">
+        <div><label>اسم المركبة / Vehicle Name</label><input type="text" class="w-full p-2 border rounded" /></div>
+        <div><label>رقم المركبة / Vehicle Number</label><input type="text" class="w-full p-2 border rounded" /></div>
+        <div><label>اسم مسؤول النوبة / Supervisor Name</label><input type="text" class="w-full p-2 border rounded" /></div>
+      </section>
+      <section class="mt-8">
+        <h2 class="text-2xl font-semibold text-[#170a5e] text-center mb-4">تفاصيل العهدة / Custody Items</h2>
+        <div class="grid grid-cols-1 gap-4" id="custodyItems"></div>
+      </section>
+      <section class="mt-8 grid md:grid-cols-2 gap-4">
+        <div><label>المستلم / Receiver Job Title</label><input type="text" class="w-full p-2 border rounded" /></div>
+        <div><label>وقت الاستلام / Pickup Time</label><input type="datetime-local" class="w-full p-2 border rounded" /></div>
+        <div><label>المسلم / Deliverer Job Title</label><input type="text" class="w-full p-2 border rounded" /></div>
+        <div><label>وقت التسليم / Delivery Time</label><input type="datetime-local" class="w-full p-2 border rounded" /></div>
+      </section>
+      <section class="mt-6">
+        <label class="font-semibold">📧 البريد الإلكتروني لاستلام التقرير / Email to receive report</label>
+        <input type="email" id="userEmail" name="user_email" placeholder="example@email.com" class="w-full mt-2 p-2 border rounded" required />
+      </section>
+      <div class="text-center mt-10 space-y-4">
+        <button type="button" onclick="exportAsPDF('form-content', 'vehicle-custody.pdf')" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-800">🖨️ تحميل PDF / Export PDF</button>
+        <button type="button" data-original-text="📤 إرسال بالبريد / Send by Email" onclick="sendEmailWithPDF({
+            formId: 'form-content',
+            emailInputId: 'userEmail',
+            pdfFileName: 'vehicle-custody.pdf',
+            formTitle: 'تقرير فحص عهدة المركبات',
+            templateId: 'template_652w4jx',
+            serviceId: 'service_juhobd8'
+        })" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700">📤 إرسال بالبريد / Send by Email</button>
+        <button type="button" onclick="goBack()" class="bg-[#170a5e] text-white px-6 py-3 rounded-lg hover:bg-purple-800">🔙 رجوع / Back</button>
+      </div>
+    </form>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script src="app_v2.js"></script>
+  <script>
+    const items = ["الإطارات / Tires", "النظافة الداخلية / Interior Cleanliness", "الإنارة العلوية / Overhead Lights", "الرافع للإطارات / Tire Jack", "مفتاح المركبة / Key + Fingerprint", "الخوذات / Helmets", "طفايات الحريق / Extinguishers", "الإسعافات الأولية / First Aid Box", "كشافات / Flashlights", "أضواء تحذير / Warning Lights", "كمية الوقود / Fuel Level", "جهاز الراديو / Radio", "المنشار / Saw", "الإطار الاحتياطي / Spare Tire", "السترات / Safety Vests", "عصى الإضاءة / Light Batons", "جهاز كشف معادن / Metal Detector"];
+    const container = document.getElementById("custodyItems");
+    items.forEach(label => {
+      const div = document.createElement("div");
+      div.className = "border p-4 rounded";
+      div.innerHTML = `<label class="font-bold flex items-center"><input type="checkbox" class="ml-2"> ${label}</label><textarea class="w-full border mt-2 rounded p-2" placeholder="ملاحظات / Notes"></textarea>`;
+      container.appendChild(div);
+    });
+  </script>
+</body>
+</html>

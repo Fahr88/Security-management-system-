@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نموذج تسجيل مخالفة | Violation Report Form</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <style>body { font-family: 'Tajawal', sans-serif; }</style>
+</head>
+<body class="bg-gray-100">
+
+  <header class="bg-[#e5d9cf] text-[#170a5e] py-6 text-center shadow-md">
+    <img src="132312.png" alt="OQ8 Logo" class="w-20 mx-auto mb-2" />
+    <h1 class="text-xl font-bold">نموذج رصد مخالفة مرورية | Traffic Violation Form</h1>
+  </header>
+
+  <h2 class="text-2xl font-bold text-center my-4 text-[#170a5e]">⚠️ Violation Report Form – OQ8</h2>
+
+  <main id="form-content" class="max-w-3xl mx-auto bg-white mt-6 p-6 rounded-lg shadow-lg">
+    <form id="violationForm">
+      <section class="grid gap-4 mb-6">
+        <div>
+          <label class="font-semibold">نوع المخالفة / Violation Type</label>
+          <select class="w-full p-2 border rounded" required><option value="">-- اختر / Select --</option><option>وقوف خاطئ / Wrong Parking</option><option>سرعة زائدة / Over Speed</option><option>استخدام الهاتف / Using Phone</option><option>عدم ربط الحزام / No Seatbelt</option></select>
+        </div>
+        <div><label class="font-semibold">الموقع / Location</label><input type="text" class="w-full p-2 border rounded" required /></div>
+        <div><label class="font-semibold">الوقت والتاريخ / Date & Time</label><input type="datetime-local" class="w-full p-2 border rounded" required /></div>
+        <div><label class="font-semibold">رقم اللوحة / Plate Number</label><input type="text" class="w-full p-2 border rounded" required /></div>
+        <div><label class="font-semibold">الشركة / Company</label><input type="text" class="w-full p-2 border rounded" required /></div>
+        <div><label class="font-semibold">هاتف المخالف / Violator Phone</label><input type="text" class="w-full p-2 border rounded" required /></div>
+        <div><label class="font-semibold">الرقم الوظيفي / Employee ID</label><input type="text" class="w-full p-2 border rounded" required /></div>
+        <div><label class="font-semibold">اسم المخالف / Violator Name</label><input type="text" class="w-full p-2 border rounded" required /></div>
+        <div><label class="font-semibold">اسم المبلّغ / Reporter Name</label><input type="text" class="w-full p-2 border rounded" required /></div>
+        <div><label class="font-semibold">ملاحظات إضافية / Additional Notes</label><textarea rows="4" class="w-full p-2 border rounded"></textarea></div>
+      </section>
+      <section class="mb-6">
+        <label class="font-semibold">📧 البريد الإلكتروني / Email to receive PDF</label>
+        <input type="email" id="userEmail" name="user_email" class="w-full p-2 border rounded" required />
+      </section>
+      <div class="text-center space-y-2">
+        <button type="button" onclick="exportAsPDF('form-content', 'violation-report.pdf')" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">🖨️ Export PDF</button>
+        <button type="button" data-original-text="📧 Send via Email" onclick="sendEmailWithPDF({
+            formId: 'form-content',
+            emailInputId: 'userEmail',
+            pdfFileName: 'violation-report.pdf',
+            formTitle: 'تقرير تسجيل مخالفة',
+            templateId: 'template_652w4jx',
+            serviceId: 'service_juhobd8'
+        })" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700">📧 Send via Email</button>
+        <button type="button" onclick="goBack()" class="bg-[#170a5e] text-white px-6 py-3 rounded-lg hover:bg-purple-800">🔙 Back to Home</button>
+      </div>
+    </form>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script src="app_v2.js"></script>
+</body>
+</html>
